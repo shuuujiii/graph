@@ -1,0 +1,110 @@
+<!DOCTYPE html>
+<html lang="ja">
+	<head>
+		<meta charset="utf-8">
+		<title>サイトタイトル</title>
+		<meta name="description" content="サイトキャプションを入力">
+		<meta name="keywords" content="サイトキーワードを,で区切って入力">
+		<!--[if lt IE 9]>
+		<script src="http://html5shiv.googlecode.com/svn/trunk/html5.js"></script>
+		<script src="http://css3-mediaqueries-js.googlecode.com/svn/trunk/css3-mediaqueries.js"></script>
+		<![endif]-->
+		<script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.3.0/Chart.bundle.js"></script>
+		<script src="./js/csv.js"></script>
+	</head>
+
+	<body>
+		<!----- ヘッダー ----->
+		<header>へっだぁ</header>
+		<nav>ナビ</nav>
+		<!----- ヘッダー END ----->
+		
+		<!----- メインコンテンツ ----->
+		<article>
+			<h1>タイトル</h1>
+			<section>
+				<h2>タイトル</h2>
+				<p>コンテンツの内容</p>
+			</section>
+		</article>
+		<!----- メインコンテンツ END ----->
+		
+		<!----- フッター ----->
+		<footer>フッター</footer>
+		<!----- フッター END ----->
+		ヘッダ  1 
+		<div>
+		<canvas id="myChart"></canvas>
+		<script>
+		var data = [20, 26, 12, 43, 33, 21, 29];
+                var canvas = document.getElementById("myChart");			
+		var ctx = document.getElementById("myChart").getContext('2d');
+		var myChart = new Chart(ctx, {
+		   type: 'line',
+		   data: {
+		      labels: ["Item1", "Item2", "Item3", "Item4", "Item5", "Item6", "Item7"],
+		      datasets: [
+		      {
+			 label: "Chart-1",
+			 borderColor: 'rgb(255, 0, 0)',
+			 data: data, 
+			 pointHoverRadius: 10,
+			 pointRadius: 10,
+		      },
+		      ]
+		   },
+		   options: {
+		     hover: {
+		       mode: 'point'
+                     },
+	             onClick: function(event, elements) {
+                       console.log(`Found ${elements.length} elements`);
+                       elements.forEach(function(element) {
+                         let point = myChart.data.datasets[element._datasetIndex].data[element._index];
+                         console.log(point);
+                       })
+                     },
+                     scales: {
+                       xAxes: [{
+                         ticks: {
+                           beginAtZero: true
+                         }
+                       }],
+                       yAxes: [{
+                         ticks: {
+                           beginAtZero: true
+                         }
+                       }]
+                     },
+                     tooltips: {
+                       callbacks: {
+			 title: function(tooltipItem, data) {
+                           return "aaa"; 
+                         },
+                         afterTitle: function(tooltipItem, data) {
+                           return "afterTitle";
+                         },
+			 label: function(tooltipItem, data) {
+			   return "labeldesu";
+		         }
+                       },
+		       titleFontSize: 100,
+                       bodyFontSize: 100
+                     }
+                  }
+		});
+		canvas.addEventListener('click', function(event) {
+		let item = myChart.getElementAtEvent(event);
+		if (item.length == 0) {
+		    console.log('no element found.')
+		    return;
+		}
+		item = item[0];
+		let data = item._chart.config.data.datasets[item._datasetIndex].data[item._index];
+		alert(`Clicked at `);
+		window.location.href = './index.html'; // 通常の遷移
+	    });
+		</script>
+		</div>ー
+	</body>
+</html>

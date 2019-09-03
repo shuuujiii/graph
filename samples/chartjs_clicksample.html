@@ -1,0 +1,83 @@
+<html>
+    <head>
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.7.1/Chart.js"></script>
+    </head>
+    <body>
+            <canvas id="myChart" width="400" height="400"></canvas>
+            <script>
+            generateRandomPoint = function() {
+                return Math.floor(Math.random() * 10)
+            }
+            var data = [];
+            for(let i = 0; i < 10; i++) {
+                data.push({ x: generateRandomPoint(), y: generateRandomPoint(), number: i })
+            }
+            var samePoints = [];
+            for (let i = 0; i < 10; i++) {
+                samePoints.push({x: 1, y: 2})
+            }
+            var canvas = document.getElementById('myChart');
+            var ctx = canvas.getContext('2d');
+            var myChart = new Chart(ctx, {
+                type: 'scatter',
+                data: {
+                    datasets: [
+                        {
+                            label: 'Random Points',
+                            data: data,
+                            fill: false,
+                            showLine: false
+                        },
+                        {
+                            label: '10 Same Points',
+                            data: samePoints,
+                            fill: false,
+                            showLine: false
+                        }
+                    ]
+                },
+                options: {
+                    hover: {
+                        mode: 'point'
+                    },
+                    onClick: function(event, elements) {
+                        console.log(`Found ${elements.length} elements`);
+                        elements.forEach(function(element) {
+                            let point = myChart.data.datasets[element._datasetIndex].data[element._index];
+                            console.log(point);
+                        })
+                    },
+                    scales: {
+                        xAxes: [{
+                            ticks: {
+                                beginAtZero: true
+                            }
+                        }],
+                        yAxes: [{
+                            ticks: {
+                                beginAtZero: true
+                            }
+                        }]
+                    },
+                    tooltips: {
+                        callbacks: {
+                            title: function(tooltipItem, data) {
+                                return new Date().toLocaleTimeString();
+                            }
+                        }
+                    }
+                }
+            });
+            canvas.addEventListener('click', function(event) {
+                let item = myChart.getElementAtEvent(event);
+                if (item.length == 0) {
+                    console.log('no element found.')
+                    return;
+                }
+                item = item[0];
+                let data = item._chart.config.data.datasets[item._datasetIndex].data[item._index];
+                alert(`Clicked at (${data.x}, ${data.y})`);
+            });
+            </script>
+    </body>
+</html>
