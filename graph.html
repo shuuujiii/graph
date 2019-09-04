@@ -41,7 +41,9 @@
 		</form>
 		<script>
 			var form = document.forms.myform;
-
+			var canvas = document.getElementById("myChart");
+			var ctx = document.getElementById("myChart").getContext('2d');
+			ctx.clearRect(0, 0, canvas.width, canvas.height);
 			if(window.File) {
 				form.myfile.addEventListener('change', function(e) {
 					// 選択されたファイルの情報を取得
@@ -55,8 +57,9 @@
 					// ファイル読み取りに成功したとき
 					reader.onload = function() {
 
-					    data = csv2Array(reader.result);
-					    drawBarChart(data);
+					    var csvdata = csv2Array(reader.result);
+					    var data = chartData(csvdata);
+					    drawBarChart(data,canvas,ctx);
 					}
 				 
 					// ファイル読み取りを実行

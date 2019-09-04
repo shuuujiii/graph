@@ -9,20 +9,13 @@ function csv2Array(str) {
   return csvData;
 }
 
-function drawBarChart(data) {
-  // 3)chart.jsのdataset用の配列を用意
-  var tmpLabels = [], tmpData1 = [], tmpData2 = [];
-  for (var row in data) {
-    tmpLabels.push(data[row][0])
-    tmpData1.push(data[row][1])
-};  // 4)chart.jsで描画
-alert("aaa");
-var canvas = document.getElementById("myChart");
-var ctx = document.getElementById("myChart").getContext('2d');
-ctx.clearRect(0, 0, canvas.width, canvas.height);
-var myChart = new Chart(ctx, {
-	   type: 'line',
-	   data: {
+function chartData(data){
+   var tmpLabels = [], tmpData1 = [], tmpData2 = [];
+   for (var row in data) {
+     tmpLabels.push(data[row][0])
+     tmpData1.push(data[row][1])
+   };
+   return  {
 	      labels: tmpLabels, 
 	      datasets: [
 	      {
@@ -33,7 +26,14 @@ var myChart = new Chart(ctx, {
 		 pointRadius: 10,
 	      },
 	      ]
-	   },
+	   }
+}
+
+function createChart(data, canvas, ctx)
+{
+	return new Chart(ctx, {
+	   type: 'line',
+	   data: data,
 	   options: {
 	     hover: {
 	       mode: 'point'
@@ -74,7 +74,15 @@ var myChart = new Chart(ctx, {
 	     }
 	  }
 	});
+}
+function drawBarChart(data, canvas, ctx) {
+  // 3)chart.jsのdataset用の配列を用意
+   // 4)chart.jsで描画
+	myChart = createChart(data, canvas, ctx);
 	myChart.update();
+        setCanvasClick(myChart, canvas);
+}
+function setCanvasClick(myChart, canvas){
 	canvas.addEventListener('click', function(event) {
 	let item = myChart.getElementAtEvent(event);
 	if (item.length == 0) {
@@ -86,5 +94,4 @@ var myChart = new Chart(ctx, {
 	alert(`Clicked at `);
 	window.location.href = './index.html'; // 通常の遷移
     });
-
 }
