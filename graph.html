@@ -9,7 +9,7 @@
 		<script src="http://html5shiv.googlecode.com/svn/trunk/html5.js"></script>
 		<script src="http://css3-mediaqueries-js.googlecode.com/svn/trunk/css3-mediaqueries.js"></script>
 		<![endif]-->
-		<script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.3.0/Chart.bundle.js"></script>
+		<script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.8.0/Chart.bundle.js"></script>
 		<script src="./js/csv.js"></script>
 	</head>
 
@@ -43,7 +43,8 @@
 			var form = document.forms.myform;
 			var canvas = document.getElementById("myChart");
 			var ctx = document.getElementById("myChart").getContext('2d');
-			ctx.clearRect(0, 0, canvas.width, canvas.height);
+                        var myChart = createChart(chartData([]),canvas, ctx);
+			//ctx.clearRect(0, 0, canvas.width, canvas.height);
 			if(window.File) {
 				form.myfile.addEventListener('change', function(e) {
 					// 選択されたファイルの情報を取得
@@ -59,7 +60,9 @@
 
 					    var csvdata = csv2Array(reader.result);
 					    var data = chartData(csvdata);
-					    drawBarChart(data,canvas,ctx);
+				            myChart.data = data;
+					    myChart.update();
+					    setCanvasClick(myChart, canvas);
 					}
 				 
 					// ファイル読み取りを実行

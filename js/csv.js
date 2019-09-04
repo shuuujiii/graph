@@ -12,8 +12,8 @@ function csv2Array(str) {
 function chartData(data){
    var tmpLabels = [], tmpData1 = [], tmpData2 = [];
    for (var row in data) {
-     tmpLabels.push(data[row][0])
-     tmpData1.push(data[row][1])
+     tmpLabels.push(data[row][0]);
+     tmpData1.push(data[row][1]);
    };
    return  {
 	      labels: tmpLabels, 
@@ -26,7 +26,7 @@ function chartData(data){
 		 pointRadius: 10,
 	      },
 	      ]
-	   }
+	   };
 }
 
 function createChart(data, canvas, ctx)
