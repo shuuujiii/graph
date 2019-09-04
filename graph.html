@@ -24,7 +24,7 @@
 			<h1>タイトル</h1>
 			<section>
 				<h2>タイトル</h2>
-				<p>コンテンツの内容</p>
+				<p>コンテンツの内aaa容</p>
 			</section>
 		</article>
 		<!----- メインコンテンツ END ----->
@@ -35,34 +35,34 @@
 		ヘッダ  1 
 		<div>
 		<canvas id="myChart"></canvas>
-		<script>
-                var canvas = document.getElementById("myChart");			
-		function main() {
-		  // 1) ajaxでCSVファイルをロード
-		  var req = new XMLHttpRequest();
-		  var filePath = 'csv/data.csv';
-		  req.open("GET", filePath, true);
-		  req.onload = function() {
-		    // 2) CSVデータ変換の呼び出し
-		    data = csv2Array(req.responseText);
-		    // 3) chart.jsデータ準備、4) chart.js描画の呼び出し
-		    drawBarChart(data);
-		  }
-		  req.send(null);
-		}
-
-		main();
-		</script>
 		</div>
 		<form name="myform">
 			<input name="myfile" type="file" />
 		</form>
 		<script>
 			var form = document.forms.myform;
-			form.myfile.addEventListener('change', function(e) {
 
-			main();
-    			})
+			if(window.File) {
+				form.myfile.addEventListener('change', function(e) {
+					// 選択されたファイルの情報を取得
+					var fileData = e.target.files[0];
+				 
+					var reader = new FileReader();
+					// ファイル読み取りに失敗したとき
+					reader.onerror = function() {
+					    alert('ファイル読み取りに失敗しました')
+					}
+					// ファイル読み取りに成功したとき
+					reader.onload = function() {
+
+					    data = csv2Array(reader.result);
+					    drawBarChart(data);
+					}
+				 
+					// ファイル読み取りを実行
+					reader.readAsText(fileData);
+				    }, false);
+    			}
 		</script>
 	</body>
 </html>

@@ -1,6 +1,6 @@
 // 2) CSVから２次元配列に変換
 function csv2Array(str) {
-  var csvData = [];
+	var csvData = [];
   var lines = str.split("\n");
   for (var i = 0; i < lines.length; ++i) {
     var cells = lines[i].split(",");
@@ -16,7 +16,10 @@ function drawBarChart(data) {
     tmpLabels.push(data[row][0])
     tmpData1.push(data[row][1])
 };  // 4)chart.jsで描画
+alert("aaa");
+var canvas = document.getElementById("myChart");
 var ctx = document.getElementById("myChart").getContext('2d');
+ctx.clearRect(0, 0, canvas.width, canvas.height);
 var myChart = new Chart(ctx, {
 	   type: 'line',
 	   data: {
@@ -71,6 +74,7 @@ var myChart = new Chart(ctx, {
 	     }
 	  }
 	});
+	myChart.update();
 	canvas.addEventListener('click', function(event) {
 	let item = myChart.getElementAtEvent(event);
 	if (item.length == 0) {
